@@ -1,9 +1,9 @@
-package socket.redes;
+package socket.redes.exemple_1;
 
 import java.io.IOException;
 import java.util.Random;
 
-public class ServerTest {
+public class TestServer {
     public static void main(String[] args) {
         int serverPort = 0;
         SocketStorageServer socketStorageServer = null;
@@ -12,7 +12,7 @@ public class ServerTest {
             socketStorageServer = new SocketStorageServer("server-top" + i);
             serverPort = socketStorageServer.startServer();
             socketStorageServer.startReceivingFiles();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         socketStorageServer.shutdownServer();

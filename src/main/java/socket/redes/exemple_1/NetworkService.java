@@ -1,4 +1,4 @@
-package socket.redes;
+package socket.redes.exemple_1;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

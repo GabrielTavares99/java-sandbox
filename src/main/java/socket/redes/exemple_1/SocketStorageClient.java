@@ -1,8 +1,6 @@
-package socket.redes;
+package socket.redes.exemple_1;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
 
@@ -14,11 +12,10 @@ public class SocketStorageClient {
     private String sourceFilePath;
     private Socket socket;
 
-    public SocketStorageClient(String id, String serverIp, int serverPort, String sourceFilePath) {
+    public SocketStorageClient(String id, String serverIp, int serverPort) {
         this.id = id;
         this.serverIp = serverIp;
         this.serverPort = serverPort;
-        this.sourceFilePath = sourceFilePath;
     }
 
     public void startConnection() throws IOException {
@@ -33,11 +30,25 @@ public class SocketStorageClient {
         socket.close();
     }
 
-    public void sendFile() throws IOException {
+    public void sendFile(String sourceFilePath) throws IOException {
         System.out.println(String.format("ID:#%s - SENDING FILE TO THE SOCKET", id));
+
         File file = new File(sourceFilePath);
+        CustomFile customFile = new CustomFile();
+        customFile.setExtension(file.getName().split("\\.")[1]);
+        customFile.setFilename(file.getName());
+        customFile.setFileInBytes(Files.readAllBytes(new File(sourceFilePath).toPath()));
+
+        File instanceFile = new File("/tmp/object-in-memory" + id);
+
+        FileOutputStream fileOutputStream = new FileOutputStream(instanceFile.getAbsoluteFile());
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(customFile);
+        fileOutputStream.close();
+        fileOutputStream.close();
+
         OutputStream outputStream = socket.getOutputStream();
-        outputStream.write(Files.readAllBytes(file.toPath()));
+        outputStream.write(Files.readAllBytes(instanceFile.toPath()));
         outputStream.close();
         System.out.println(String.format("ID:#%s - SEND FILE COMPLETED", id));
     }

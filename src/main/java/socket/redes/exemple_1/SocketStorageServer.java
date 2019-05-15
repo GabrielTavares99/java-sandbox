@@ -1,9 +1,7 @@
-package socket.redes;
+package socket.redes.exemple_1;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -14,16 +12,23 @@ public class SocketStorageServer {
     private String id;
     private ServerSocket serverSocket;
     private String tempFolder;
+    private String instancesFolder;
+    private String filesFolder;
 
     public SocketStorageServer(String id) {
         this.id = id;
         System.out.println("CREATING FOLDER TO REQUESTS");
         tempFolder = String.format("/tmp/%s", id);
+        instancesFolder = String.format("%s/serialized-instances", tempFolder);
+        filesFolder = String.format("%s/received-files", tempFolder);
+
         boolean newFile = new File(tempFolder).mkdirs();
+        boolean newFile2 = new File(instancesFolder).mkdirs();
+        boolean newFile3 = new File(filesFolder).mkdirs();
         System.out.println(String.format("IS FOLDER CREATED? %b", newFile));
     }
 
-    public void startReceivingFiles() throws IOException {
+    public void startReceivingFiles() throws IOException, ClassNotFoundException {
         int cont = 0;
         while (true) {
             System.out.println(String.format("CONNECTION #%d", ++cont));
@@ -31,13 +36,32 @@ public class SocketStorageServer {
             System.out.println("WAITING CONNECTION");
             Socket connection = serverSocket.accept();
 
-            System.out.println("READING INPUT");
+            String pathInstance = String.format("%s/instance-%d.instance", instancesFolder, cont);
+
+            System.out.println("GETTING INPUT");
             InputStream inputStream = connection.getInputStream();
-            File file = new File(String.format("%s/file-%d.png", tempFolder, cont));
-            Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            System.out.println("DESERIALIZATION");
+            File instanceFile = new File(pathInstance);
+
+            Files.copy(inputStream, instanceFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            FileInputStream fileInputStream = new FileInputStream(instanceFile.getAbsoluteFile());
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+            CustomFile transferreddObject = (CustomFile) objectInputStream.readObject();
+
+            objectInputStream.close();
+            fileInputStream.close();
+
+            String pathFile = String.format("%s/file-%d.%s", filesFolder, cont, transferreddObject.getExtension());
+            File targetFile = new File(pathFile);
+            Files.copy(new ByteArrayInputStream(transferreddObject.getFileInBytes()), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
             inputStream.close();
             System.out.println("CLOSING INPUT CHANNEL");
 
+            Files.delete(instanceFile.toPath());
             closeClientSocket(connection);
         }
 
