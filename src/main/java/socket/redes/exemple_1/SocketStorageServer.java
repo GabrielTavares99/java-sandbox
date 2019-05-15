@@ -17,7 +17,7 @@ public class SocketStorageServer {
 
     public SocketStorageServer(String id) {
         this.id = id;
-        System.out.println("CREATING FOLDER TO REQUESTS");
+        System.out.println("CREATING FOLDER TO REQUESTS - " + id);
         tempFolder = String.format("/tmp/%s", id);
         instancesFolder = String.format("%s/serialized-instances", tempFolder);
         filesFolder = String.format("%s/received-files", tempFolder);
@@ -25,7 +25,7 @@ public class SocketStorageServer {
         boolean newFile = new File(tempFolder).mkdirs();
         boolean newFile2 = new File(instancesFolder).mkdirs();
         boolean newFile3 = new File(filesFolder).mkdirs();
-        System.out.println(String.format("IS FOLDER CREATED? %b", newFile));
+        System.out.println(String.format("IS FOLDER CREATED? %b %b %b", newFile, newFile2, newFile3));
     }
 
     public void startReceivingFiles() throws IOException, ClassNotFoundException {

@@ -9,7 +9,6 @@ public class SocketStorageClient {
     private String id;
     private String serverIp;
     private int serverPort;
-    private String sourceFilePath;
     private Socket socket;
 
     public SocketStorageClient(String id, String serverIp, int serverPort) {
