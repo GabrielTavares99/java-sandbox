@@ -6,13 +6,12 @@ import java.net.Socket;
 
 public class ClientSocket {
 
-    public static void main(String[] args) throws IOException {
+    private final String url;
+    private final String path;
+    private final String method;
+    private final String params;
 
-        String url = "siga.cps.sp.gov.br";
-        String path = "/";
-        String method = "GET";
-        String params = "";
-
+    public void doRequest() throws IOException {
         int port = 80;
 
         InetAddress byName = InetAddress.getByName(url);
@@ -22,9 +21,9 @@ public class ClientSocket {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(socket.getOutputStream(), "UTF8");
         BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
         bufferedWriter.write(String.format("%s %s HTTP/1.0rn", method, path));
-        bufferedWriter.write("GET " + path + " HTTP/1.0rn");
+        bufferedWriter.write(method + " " + path + " HTTP/1.0rn");
         bufferedWriter.write("Content-Length: " + params.length() + "rn");
-        bufferedWriter.write("Content-Type: application/x-www-form-urlencodedrn");
+        bufferedWriter.write("Content-Type: */*");
         bufferedWriter.write("rn");
 
 //      SEND PARAMETERS
@@ -41,7 +40,13 @@ public class ClientSocket {
 
         bufferedWriter.close();
         rd.close();
+    }
 
+    public ClientSocket(String url, String path, String method, String params) {
+        this.url = url;
+        this.path = path;
+        this.method = method;
+        this.params = params;
     }
 
 }
