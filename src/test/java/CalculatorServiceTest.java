@@ -4,8 +4,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import service.CalculatorService;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CalculatorServiceTest {
@@ -78,6 +77,13 @@ public class CalculatorServiceTest {
     @DisplayName("CALC A WORD LENGTH")
     void wordLength(String word, int expectedSize) {
         assertEquals(word.length(), expectedSize);
+    }
+
+    @RepeatedTest(10)
+    void getMachineTime(){
+        long currentTimeMillis = System.currentTimeMillis();
+        System.out.println(currentTimeMillis);
+        assertTrue(currentTimeMillis > 0);
     }
 }
 
