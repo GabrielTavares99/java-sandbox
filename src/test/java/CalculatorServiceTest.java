@@ -70,11 +70,12 @@ public class CalculatorServiceTest {
         assertEquals(sumResult, result);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "length [{0}] must have {1} characters")
     @CsvSource(value = {
             "'',0",
             "car,3"
     })
+    @DisplayName("CALC A WORD LENGTH")
     void wordLength(String word, int expectedSize) {
         assertEquals(word.length(), expectedSize);
     }
