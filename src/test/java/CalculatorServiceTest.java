@@ -3,9 +3,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import service.CalculatorService;
+import service.TimeService;
+
+import java.time.Duration;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
 
 public class CalculatorServiceTest {
 
@@ -63,7 +67,6 @@ public class CalculatorServiceTest {
     })
     @DisplayName("SUM OPERATION")
     void sumOperation(int num1, int num2, int result) {
-//        SINGLE '' REPRESENTS A EMPTY STRING ON PARAMETERIZED TESTS
         CalculatorService calculatorService = new CalculatorService();
         int sumResult = (int) calculatorService.sum(num1, num2);
         assertEquals(sumResult, result);
@@ -80,6 +83,7 @@ public class CalculatorServiceTest {
     }
 
     @RepeatedTest(10)
+    @DisplayName("MUST GET TIME MACHINE BY N TIMES")
     void getMachineTime(){
         long currentTimeMillis = System.currentTimeMillis();
         System.out.println(currentTimeMillis);
