@@ -3,13 +3,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import service.CalculatorService;
-import service.TimeService;
 
-import java.time.Duration;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTimeout;
 
 public class CalculatorServiceTest {
 
@@ -84,10 +81,35 @@ public class CalculatorServiceTest {
 
     @RepeatedTest(10)
     @DisplayName("MUST GET TIME MACHINE BY N TIMES")
-    void getMachineTime(){
+    void getMachineTime() {
         long currentTimeMillis = System.currentTimeMillis();
         System.out.println(currentTimeMillis);
         assertTrue(currentTimeMillis > 0);
+    }
+
+    @Nested
+    @DisplayName("For negative numbers")
+    class NegativeNumberTests {
+        int num1;
+        int num2;
+        CalculatorService calculatorService = new CalculatorService();
+
+        @BeforeEach
+        void setNegativeNumbers() {
+            num1 = -100;
+            num2 = -20;
+        }
+
+        @Test
+        void sumWithNegativeNumbers() {
+            assertTrue(calculatorService.sum(num1, num2) <= 0);
+            num1 = 99;
+        }
+
+        @Test
+        void minusWithNegativeNumbers() {
+            assertTrue(calculatorService.multiple(num1, num2) > 0);
+        }
     }
 }
 
