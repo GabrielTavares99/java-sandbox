@@ -33,7 +33,7 @@ public class CalculatorServiceTest {
     @Test
     void sumTest() {
         CalculatorService calculatorService = new CalculatorService();
-        assertEquals(calculatorService.sum(1, 2.5), 3.5, 0);
+        Assertions.assertEquals(calculatorService.sum(1, 2.5), 3.5, 0);
     }
 
     @Test
