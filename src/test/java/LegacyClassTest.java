@@ -3,10 +3,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.CalculatorService;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Disabled
-public class LegacyClassTest {
+class LegacyClassTest {
 
     @Test
     @DisplayName("Unused and Legacy multiplication")

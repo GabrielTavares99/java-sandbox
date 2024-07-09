@@ -1,13 +1,14 @@
-import org.junit.Test;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import service.TimeService;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
 
 public class TimeServiceTest {
 
@@ -27,7 +28,7 @@ public class TimeServiceTest {
 
     @Test
     @Disabled //IGNORE
-    public void disabledTest(){
+    public void disabledTest() {
         assertEquals(1, 1);
     }
 

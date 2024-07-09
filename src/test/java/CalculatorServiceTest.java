@@ -4,9 +4,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import service.CalculatorService;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculatorServiceTest {
 
@@ -33,7 +31,7 @@ public class CalculatorServiceTest {
     @Test
     void sumTest() {
         CalculatorService calculatorService = new CalculatorService();
-        Assertions.assertEquals(calculatorService.sum(1, 2.5), 3.5, 0);
+        assertEquals(calculatorService.sum(1, 2.5), 3.5, 0);
     }
 
     @Test
