@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-class SimpleSortTest {
+class SelectionSortTest {
 
     @Test
     void simpleSort() {
-        final var simpleSort = new SimpleSort();
+        final var simpleSort = new SelectionSort();
 
         Integer[] items = {3, 4, 1, 2};
         final var response = simpleSort.sort(items);
