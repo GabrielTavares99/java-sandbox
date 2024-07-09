@@ -4,7 +4,7 @@ import lombok.var;
 
 import java.util.Arrays;
 
-public class SelectionSort {
+public class SelectionSort implements ISort<Integer> {
 
     public Integer[] sort(Integer[] items) {
         for (var i = 0; i < items.length; i++) {
