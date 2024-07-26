@@ -2,7 +2,7 @@ package recursion;
 
 import java.util.Arrays;
 
-public class ExamplesRecursion {
+public class GeneralExamples {
 
     public Integer sum(Integer[] items) {
         System.out.println(Arrays.toString(items));
@@ -21,6 +21,12 @@ public class ExamplesRecursion {
 
         Integer[] newItems = Arrays.copyOfRange(items, 1, items.length);
         return maxValue(newItems);
+    }
+
+    public int countItems(Integer[] items) {
+        if (items.length == 0) return 0;
+        Integer[] newItems = Arrays.copyOfRange(items, 1, items.length);
+        return 1 + countItems(newItems);
     }
 
 }
